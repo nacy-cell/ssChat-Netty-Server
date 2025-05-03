@@ -24,8 +24,8 @@ public class Server {
         bootstrap.group(bossGroup, workerGroup);
 
         Channel channel=bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
-            @Override protected
-            void initChannel(SocketChannel ch) throws Exception {
+            @Override
+            protected void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline().addLast(new IdleStateHandler(30, 0, 0));
 
                 ch.pipeline().addLast(new ProtoFrameDecoder());
@@ -35,12 +35,11 @@ public class Server {
                 ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 ch.pipeline().addLast(new LoginStatusRequestMessageHandler());
                 ch.pipeline().addLast(new LoginRequestMessageHandler());
+                ch.pipeline().addLast(new RegistRequestMessageHandler());
                 ch.pipeline().addLast(new SingleChatMessageHandler());
                 ch.pipeline().addLast(new GlobalExceptionHandler());
             }
-        }
-
-        ).bind(8080).syncUninterruptibly().channel();
+        }).bind(8080).syncUninterruptibly().channel();
 
         try {
             channel.closeFuture().sync();
