@@ -3,9 +3,7 @@ package org.example.Server.message;
 import lombok.Data;
 import org.example.Server.Util.SequenceIdUtil;
 import org.example.Server.message.requestMessage.*;
-import org.example.Server.message.responseMessage.LoginRequestResponseMessage;
-import org.example.Server.message.responseMessage.LoginStatusResponseMessage;
-import org.example.Server.message.responseMessage.RegisterRequestResponseMessage;
+import org.example.Server.message.responseMessage.*;
 
 
 import java.io.Serializable;
@@ -50,6 +48,18 @@ public abstract class Message implements Serializable {
     public static final int GroupImageMessage = 41;
     public static final int GroupVideoMessage = 42;
     public static final int GroupFileMessage = 43;
+    public static final int GroupCreateMessage = 44;
+    public static final int GroupJoinMessage = 45;
+    public static final int GroupQuitMessage = 46;
+    public static final int GroupMembersMessage = 47;
+    public static final int GroupTextResponseMessage = 48;
+    public static final int GroupImageResponseMessage = 49;
+    public static final int GroupVideoResponseMessage = 50;
+    public static final int GroupFileResponseMessage = 51;
+    public static final int GroupCreateResponseMessage = 52;
+    public static final int GroupJoinResponseMessage = 53;
+    public static final int GroupQuitResponseMessage = 54;
+    public static final int GroupMembersResponseMessage = 55;
 
     public static final int IdentityVerifyMessage=110;
     //   public static final int IdentityVerifyResponseMessage=111;
@@ -70,6 +80,22 @@ public abstract class Message implements Serializable {
         messageClasses.put(SingleImageRequestMessage, SingleChatImageRequestMessage.class);
         messageClasses.put(SingleVideoRequestMessage, SingleChatVideoRequestMessage.class);
         messageClasses.put(SingleFileRequestMessage, SingleChatFileRequestMessage.class);
+        messageClasses.put(GroupTextMessage, GroupChatTextRequestMessage.class);
+        messageClasses.put(GroupImageMessage, GroupChatImageRequestMessage.class);
+        messageClasses.put(GroupVideoMessage, GroupChatVideoRequestMessage.class);
+        messageClasses.put(GroupFileMessage, GroupChatFileRequestMessage.class);
+        messageClasses.put(GroupCreateMessage, GroupCreateRequestMessage.class);
+        messageClasses.put(GroupJoinMessage, GroupJoinRequestMessage.class);
+        messageClasses.put(GroupQuitMessage, GroupQuitRequestMessage.class);
+        messageClasses.put(GroupMembersMessage, GroupMembersRequestMessage.class);
+        messageClasses.put(GroupTextResponseMessage, GroupChatTextResponseMessage.class);
+        messageClasses.put(GroupImageResponseMessage, GroupChatImageResponseMessage.class);
+        messageClasses.put(GroupFileResponseMessage,GroupChatFileResponseMessage.class);
+        messageClasses.put(GroupVideoResponseMessage, GroupChatVideoResponseMessage.class);
+        messageClasses.put(GroupCreateResponseMessage, GroupCreateResponseMessage.class);
+        messageClasses.put(GroupJoinResponseMessage, GroupJoinResponseMessage.class);
+        messageClasses.put(GroupQuitResponseMessage, GroupQuitResponseMessage.class);
+        messageClasses.put(GroupMembersResponseMessage, GroupMembersResponseMessage.class);
         messageClasses.put(IdentityVerifyMessage, IdentityVerifyMessage.class);
         messageClasses.put(PingMessage, PingMessage.class);
         messageClasses.put(PongMessage, PongMessage.class);

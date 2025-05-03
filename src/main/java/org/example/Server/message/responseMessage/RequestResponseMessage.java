@@ -13,4 +13,5 @@ import org.example.Server.message.Message;
 public abstract class RequestResponseMessage extends Message {
     private boolean success;
     private String reason;
+
 }
