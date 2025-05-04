@@ -37,6 +37,11 @@ public class Server {
                 ch.pipeline().addLast(new LoginRequestMessageHandler());
                 ch.pipeline().addLast(new RegistRequestMessageHandler());
                 ch.pipeline().addLast(new SingleChatMessageHandler());
+                ch.pipeline().addLast(new GroupCreateRequestMessageHandler());
+                ch.pipeline().addLast(new GroupChatTextRequestMessageHandler());
+                ch.pipeline().addLast(new GroupMembersRequestMessageHandler());
+                ch.pipeline().addLast(new GroupJoinRequestMessageHandler());
+                ch.pipeline().addLast(new GroupQuitRequestMessageHandler());
                 ch.pipeline().addLast(new GlobalExceptionHandler());
             }
         }).bind(8080).syncUninterruptibly().channel();
@@ -48,7 +53,6 @@ public class Server {
         }finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-
         }
 
     }

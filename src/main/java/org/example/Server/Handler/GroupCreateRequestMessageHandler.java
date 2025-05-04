@@ -21,12 +21,13 @@ public class GroupCreateRequestMessageHandler extends SimpleChannelInboundHandle
     protected void channelRead0(ChannelHandlerContext ctx, GroupCreateRequestMessage msg) throws Exception {
         final String groupName = msg.getGroupName();
         final Set<Integer> members = msg.getMembers();
+        final Integer creator = msg.getCreator();
         // 群管理器
         final GroupSession groupSession = GroupSessionFactory.getGroupSession();
-        final Group group = groupSession.createGroup(groupName, members);
+        final int group = groupSession.createGroup(creator,groupName, members);
 
         // 创建成功
-        if(group == null){
+        if(group != 0){
             // 发送成功消息
             ctx.writeAndFlush(new GroupCreateResponseMessage(true, "成功创建群聊:" + groupName));
 
