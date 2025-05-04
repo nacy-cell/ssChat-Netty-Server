@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class RegisterRequestMessage extends LoginAndRegisterRequestMessage {
-    Integer userId;
+    String username;
     String password;
 
-    public  RegisterRequestMessage(Integer userId, String password) {
-        this.userId = userId;
+    public  RegisterRequestMessage(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
