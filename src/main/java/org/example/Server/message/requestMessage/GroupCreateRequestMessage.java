@@ -8,8 +8,10 @@ import java.util.Set;
 public class GroupCreateRequestMessage extends GroupChatRequestMessage{
     private String groupName;
     private Set<Integer> members;
+    private Integer creator;
 
-    public GroupCreateRequestMessage(String groupName, Set<Integer> members) {
+    public GroupCreateRequestMessage(Integer creator,String groupName, Set<Integer> members) {
+        this.creator = creator;
         this.groupName = groupName;
         this.members = members;
     }

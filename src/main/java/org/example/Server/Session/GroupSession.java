@@ -11,7 +11,7 @@ public interface GroupSession {
      * @param members 成员
      * @return 成功时返回 null , 失败返回 原来的value
      */
-    Group createGroup(String name, Set<Integer> members);
+    int createGroup(Integer creator,String name, Set<Integer> members);
 
     /**
      * 加入聊天组
@@ -19,7 +19,7 @@ public interface GroupSession {
      * @param member 成员名
      * @return 如果组不存在返回 null, 否则返回组对象
      */
-    Group joinMember(String name, Integer member);
+    int joinMember(String name, Integer member);
 
     /**
      * 移除组成员
@@ -27,14 +27,14 @@ public interface GroupSession {
      * @param member 成员名
      * @return 如果组不存在返回 null, 否则返回组对象
      */
-    Group removeMember(String name, Integer member);
+    int removeMember(String name, Integer member);
 
     /**
      * 移除聊天组
      * @param name 组名
      * @return 如果组不存在返回 null, 否则返回组对象
      */
-    Group removeGroup(String name);
+    int removeGroup(String name);
 
     /**
      * 获取组成员
