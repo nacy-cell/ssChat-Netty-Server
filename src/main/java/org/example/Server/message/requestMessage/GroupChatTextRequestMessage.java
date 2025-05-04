@@ -9,11 +9,13 @@ public class GroupChatTextRequestMessage extends GroupChatRequestMessage {
     private String content;
     private String groupName;
     private Integer from;
+    private String time;
 
-    public GroupChatTextRequestMessage(Integer from, String groupName, String content) {
+    public GroupChatTextRequestMessage(String sendTime,Integer from, String groupName, String content) {
         this.content = content;
         this.groupName = groupName;
         this.from = from;
+        this.time = sendTime;
     }
 
     @Override

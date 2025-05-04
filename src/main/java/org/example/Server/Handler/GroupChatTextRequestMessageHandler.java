@@ -20,7 +20,7 @@ public class GroupChatTextRequestMessageHandler extends SimpleChannelInboundHand
 
         for (Channel channel : channelList) {
 
-            channel.writeAndFlush(new GroupChatTextResponseMessage(msg.getFrom(), msg.getContent()));
+            channel.writeAndFlush(new GroupChatTextResponseMessage(msg.getTime(),msg.getFrom(), msg.getContent(),msg.getGroupName()));
         }
     }
 }
