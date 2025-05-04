@@ -1,4 +1,6 @@
 package org.example.Server.Session;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6,40 +8,71 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import io.netty.channel.Channel;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.example.Server.Dao.GroupMapper;
 
 public class GroupSessionMemoryImpl implements GroupSession {
     private final Map<String, Group> groupMap = new ConcurrentHashMap<>();
+    private SqlSessionFactory sqlSessionFactory;
 
+    public GroupSessionMemoryImpl() {
+        try {
+            String resource = "mybatis-config.xml";
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
-    public Group createGroup(String name, Set<Integer> members) {
-        Group group = new Group(name, members);
-        return groupMap.putIfAbsent(name, group); // 没有则放入
+    public int createGroup(Integer creator,String name,Set<Integer> members) {
+        try (SqlSession session = sqlSessionFactory.openSession()){
+            GroupMapper groupMapper = session.getMapper(GroupMapper.class);
+            int t = groupMapper.createGroup(name,creator);
+            if (t != 0){
+                for (Integer i : members){
+                    joinMember(name,i);
+                }
+                return t;
+            }else{
+                return 0;
+            }
+        }
     }
 
     @Override
-    public Group joinMember(String name, Integer member) {
-        return groupMap.computeIfPresent(name, (key, value) -> {
-            value.getMembers().add(member);       // 指定 key 的值进行重新计算，前提是该 key 存在于 hashMap 中
-            return value;
-        });
+    public int joinMember(String name, Integer member) {
+        try (SqlSession session = sqlSessionFactory.openSession()){
+            GroupMapper groupMapper = session.getMapper(GroupMapper.class);
+            return groupMapper.joinMember(name,member);
+        }
     }
 
     @Override
-    public Group removeMember(String name, Integer member) {
-        return groupMap.computeIfPresent(name, (key, value) -> {
-            value.getMembers().remove(member);
-            return value;
-        });
+    public int removeMember(String name, Integer member) {
+        try (SqlSession session = sqlSessionFactory.openSession()){
+            GroupMapper groupMapper = session.getMapper(GroupMapper.class);
+            return groupMapper.removeMember(name,member);
+        }
     }
 
     @Override
-    public Group removeGroup(String name) {
-        return groupMap.remove(name);
+    public int removeGroup(String name) {
+        try (SqlSession session = sqlSessionFactory.openSession()){
+            GroupMapper groupMapper = session.getMapper(GroupMapper.class);
+            return groupMapper.removeGroup(name);
+        }
     }
 
     @Override
     public Set<Integer> getMembers(String name) {
-        return groupMap.getOrDefault(name, Group.EMPTY_GROUP).getMembers();
+        try (SqlSession session = sqlSessionFactory.openSession()){
+            GroupMapper groupMapper = session.getMapper(GroupMapper.class);
+            return groupMapper.getMembers(name);
+        }
     }
 
     // 根据 【群聊名称】 -> 【用户名Set】 -> map遍历 -> 【用户名获取到 所有对应的 channel】 -> 【channel List】
