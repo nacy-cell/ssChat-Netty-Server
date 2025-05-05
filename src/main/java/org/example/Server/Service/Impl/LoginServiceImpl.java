@@ -1,27 +1,41 @@
 package org.example.Server.Service.Impl;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.example.Server.Dao.UserMapper;
+import org.example.Server.Model.User;
 import org.example.Server.Service.LoginService;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LoginServiceImpl implements LoginService {
-
-    private Map<Integer, String> allUserMap = new ConcurrentHashMap<>();
-
+    private SqlSessionFactory sqlSessionFactory;
+    public LoginServiceImpl()
     {
-        allUserMap.put(1, "1");
-        allUserMap.put(2, "2");
-        allUserMap.put(11111, "123");
-        allUserMap.put(11233, "123");
+        try {
+            String resource = "mybatis-config.xml";
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean login(Integer userId, String password) {
-        String pass = allUserMap.get(userId);
-        if (pass == null) {
-            return false;
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            User existingUser = userMapper.getUserByUsername(userId);
+            if (existingUser != null && existingUser.getPassword().equals(password)) {
+                return true;
+            }else{
+                return false;
+            }
         }
-        return pass.equals(password);
     }
 }

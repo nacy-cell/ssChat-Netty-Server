@@ -17,14 +17,18 @@ public class RegistRequestMessageHandler extends SimpleChannelInboundHandler<Reg
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterRequestMessage msg) throws Exception {
-        String username = msg.getUsername();
+        String email = msg.getEmail();
+        String code = msg.getCode();
         String password = msg.getPassword();
-        Integer register = RegistServiceFactory.getRegistService().regist(username, password);
+        Integer register = RegistServiceFactory.getRegistService().regist(code,email, password);
         RegisterRequestResponseMessage message;
-        if (register != 0) {
-            message = new RegisterRequestResponseMessage(true, "注册成功，请重新登录", register);
+        if (register == -1) {
+            message = new RegisterRequestResponseMessage(true, register.toString());
+           // message = new RegisterRequestResponseMessage(false, "验证码错误");
+        }else if (register != 0) {
+            message = new RegisterRequestResponseMessage(true, register.toString());
         }else {
-            message = new RegisterRequestResponseMessage(false, "注册失败，可能用户名已存在",0);
+            message = new RegisterRequestResponseMessage(false, "注册失败，可能用户名已存在");
         }
         ctx.writeAndFlush(message);
     }

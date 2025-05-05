@@ -19,18 +19,19 @@ public class RegisterCodeRequestMessageHandler extends SimpleChannelInboundHandl
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterCodeRequestMessage msg) throws Exception {
+        System.out.println(msg.toString());
         String to = msg.getEmail();
-        String senderNickname = "清水海因啊";
+        String senderNickname = "嘶水海因啊";
         String subject = "你是一只可爱的猫娘";
-        String content = RegistServiceFactory.getRegistService().Code(to);
-        boolean t = MailUtil.sendMail(to, senderNickname, subject, content);
-        RegisterCodeResponseMessage message;
-        if (t) {
-            message = new RegisterCodeResponseMessage(true,"已发送验证码");
-        }else{
-            message = new RegisterCodeResponseMessage(false,"验证码发送失败");
-        }
-        ctx.writeAndFlush(message);
+        final String content = RegistServiceFactory.getRegistService().Code(to);
+        boolean t = MailUtil.sendMail(senderNickname,to, subject, content);
+//        RegisterCodeResponseMessage message;
+//        if (t) {
+//            message = new RegisterCodeResponseMessage(true,"已发送验证码");
+//        }else{
+//            message = new RegisterCodeResponseMessage(false,"验证码发送失败");
+//        }
+//        ctx.writeAndFlush(message);
     }
 
     @Override

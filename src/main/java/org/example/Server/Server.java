@@ -36,6 +36,7 @@ public class Server {
                 ch.pipeline().addLast(new LoginStatusRequestMessageHandler());
                 ch.pipeline().addLast(new LoginRequestMessageHandler());
                 ch.pipeline().addLast(new RegistRequestMessageHandler());
+                ch.pipeline().addLast(new RegisterCodeRequestMessageHandler());
                 ch.pipeline().addLast(new SingleChatMessageHandler());
                 ch.pipeline().addLast(new GroupCreateRequestMessageHandler());
                 ch.pipeline().addLast(new GroupChatTextRequestMessageHandler());
