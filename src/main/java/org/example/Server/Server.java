@@ -37,6 +37,29 @@ public class Server {
                 ch.pipeline().addLast(new LoginRequestMessageHandler());
                 ch.pipeline().addLast(new SingleChatMessageHandler());
                 ch.pipeline().addLast(new GlobalExceptionHandler());
+
+//                // 添加好友请求处理器
+//                ch.pipeline().addLast(new FriendRequestHandler());
+//                ch.pipeline().addLast(new GlobalExceptionHandler());
+//
+//                ch.pipeline().addLast(new LoginRequestMessageHandler());
+//                ch.pipeline().addLast(new SingleChatMessageHandler());
+//                ch.pipeline().addLast(new FriendRequestHandler());
+//                ch.pipeline().addLast(new FriendRequestHandler());
+//                ch.pipeline().addLast(new GroupCreateHandler());
+//                ch.pipeline().addLast(new GroupCreateHandler());
+//                ch.pipeline().addLast(new GlobalExceptionHandler());
+
+                // 添加好友相关处理器
+                ch.pipeline().addLast(new FriendRequestHandler());
+                ch.pipeline().addLast(new FriendListRequestHandler());
+
+                // 添加群组相关处理器
+                ch.pipeline().addLast(new GroupCreateHandler());
+                ch.pipeline().addLast(new GroupListRequestHandler());
+
+                // 全局异常处理
+                ch.pipeline().addLast(new GlobalExceptionHandler());
             }
         }
 

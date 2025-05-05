@@ -17,4 +17,15 @@ public interface Session {
 
 
     Integer getUserIdByToken(String token);
+
+    /**
+     * 根据字符串用户ID获取 channel
+     */
+    default Channel getChannel(String userId) {
+        try {
+            return getChannel(Integer.parseInt(userId));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }
