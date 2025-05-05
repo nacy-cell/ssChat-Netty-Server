@@ -8,7 +8,6 @@ import org.example.Server.Session.GroupSession;
 import org.example.Server.Session.GroupSessionFactory;
 import org.example.Server.message.requestMessage.GroupChatImageRequestMessage;
 import org.example.Server.message.responseMessage.GroupChatImageResponseMessage;
-import org.example.Server.message.responseMessage.GroupChatTextResponseMessage;
 
 import java.util.List;
 
