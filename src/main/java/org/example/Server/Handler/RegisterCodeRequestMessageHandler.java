@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 @ChannelHandler.Sharable
 public class RegisterCodeRequestMessageHandler extends SimpleChannelInboundHandler<RegisterCodeRequestMessage> {
-    private static final Logger log = LoggerFactory.getLogger(RegistRequestMessageHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(RegisterCodeRequestMessageHandler.class);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterCodeRequestMessage msg) throws Exception {
@@ -26,9 +26,9 @@ public class RegisterCodeRequestMessageHandler extends SimpleChannelInboundHandl
         boolean t = MailUtil.sendMail(to, senderNickname, subject, content);
         RegisterCodeResponseMessage message;
         if (t) {
-            message = new RegisterCodeResponseMessage(t,"已发送验证码");
+            message = new RegisterCodeResponseMessage(true,"已发送验证码");
         }else{
-            message = new RegisterCodeResponseMessage(t,"验证码发送失败");
+            message = new RegisterCodeResponseMessage(false,"验证码发送失败");
         }
         ctx.writeAndFlush(message);
     }
