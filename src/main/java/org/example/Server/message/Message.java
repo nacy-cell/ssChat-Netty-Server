@@ -38,6 +38,7 @@ public abstract class Message implements Serializable {
     public static final int LoginStatusRequestMessage=4;
     public static final int LoginStatusResponseMessage=5;
     public static final int RegisterCodeRequestMessage=6;
+    public static final int RegisterCodeResponseMessage=7;
 
     public static final int SingleTextRequestMessage=10;
     public static final int SingleImageRequestMessage = 11;

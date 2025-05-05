@@ -7,12 +7,49 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.example.Server.Dao.UserMapper;
 import org.example.Server.Model.User;
 import org.example.Server.Service.RegistService;
+import org.example.Server.Util.RedisUtil;
+import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class RegistServiceImpl implements RegistService {
     private SqlSessionFactory sqlSessionFactory;
+
+    private static final int CAPTCHA_LENGTH = 6;
+    private static final int CAPTCHA_EXPIRE_TIME = 60 * 5; // 5 minutes
+
+    public String generateCaptcha() {
+        Random random = new Random();
+        StringBuilder captcha = new StringBuilder();
+        for (int i = 0; i < CAPTCHA_LENGTH; i++) {
+            captcha.append(random.nextInt(10));
+        }
+        return captcha.toString();
+    }
+
+    public void saveCaptchaToRedis(String clientId, String captcha) {
+        Jedis jedis = RedisUtil.getJedis();
+        try {
+            jedis.setex(clientId, CAPTCHA_EXPIRE_TIME, captcha);
+        } finally {
+            RedisUtil.closeJedis(jedis);
+        }
+    }
+
+    public boolean verifyCaptcha(String clientId, String inputCaptcha) {
+        Jedis jedis = RedisUtil.getJedis();
+        try {
+            String storedCaptcha = jedis.get(clientId);
+            if (storedCaptcha != null && storedCaptcha.equals(inputCaptcha)) {
+                jedis.del(clientId);
+                return true;
+            }
+        } finally {
+            RedisUtil.closeJedis(jedis);
+        }
+        return false;
+    }
 
     public RegistServiceImpl() {
         try {
@@ -49,5 +86,12 @@ public class RegistServiceImpl implements RegistService {
             session.commit(); // 提交事务
             return userID; // 根据插入结果判断注册是否成功
         }
+    }
+
+    @Override
+    public String Code(String email) {
+        String captcha = generateCaptcha();
+        saveCaptchaToRedis(email, captcha);
+        return captcha;
     }
 }
