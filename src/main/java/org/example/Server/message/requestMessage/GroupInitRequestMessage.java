@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class GroupInitRequestMessage extends GroupChatRequestMessage {
-
     private String groupName;
     private Integer from;
     private Integer messageID;
