@@ -14,4 +14,10 @@ public interface UserMapper {
     @Insert("INSERT INTO user (UserID, email, password) VALUES (#{userID},#{email}, #{password})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public int insertUser(User user);
+
+    @Update("UPDATE user SET last_message_id=#{lastMessageId} WHERE UserId = #{userId}")
+    public void updateLastMessageId(@Param("userId") Integer userId, @Param("lastMessageId") Integer lastMessageId);
+
+
+
 }

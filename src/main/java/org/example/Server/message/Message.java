@@ -64,7 +64,7 @@ public abstract class Message implements Serializable {
 
     public static final int IdentityVerifyMessage=110;
     //   public static final int IdentityVerifyResponseMessage=111;
-
+    public static final int InitOKMessage=111;
     public static final int PingMessage=126;
     public static final int PongMessage=127;
 
@@ -99,6 +99,7 @@ public abstract class Message implements Serializable {
         messageClasses.put(GroupQuitResponseMessage, GroupQuitResponseMessage.class);
         messageClasses.put(GroupMembersResponseMessage, GroupMembersResponseMessage.class);
         messageClasses.put(IdentityVerifyMessage, IdentityVerifyMessage.class);
+        messageClasses.put(InitOKMessage, InitOKMessage.class);
         messageClasses.put(PingMessage, PingMessage.class);
         messageClasses.put(PongMessage, PongMessage.class);
 
