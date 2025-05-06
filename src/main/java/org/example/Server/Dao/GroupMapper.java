@@ -15,7 +15,7 @@ public interface GroupMapper {
      * @param creatorId 创建者 ID
      * @return 受影响的行数
      */
-    @Insert("INSERT INTO groups (group_name, creator_id) VALUES (#{groupName}, #{creatorId})")
+    @Insert("INSERT INTO 'groups' (group_name, creator_id) VALUES (#{groupName}, #{creatorId})")
     public int createGroup(@Param("groupName") String groupName, @Param("creatorId") Integer creatorId);
 
     /**

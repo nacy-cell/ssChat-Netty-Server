@@ -55,7 +55,7 @@ public class MailUtil {
 
     private static EmailProperties loadEmailProperties() {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/resource/email.properties")) {
+        try (FileInputStream fis = new FileInputStream("C:\\Users\\lenovo\\Desktop\\ssChat-Netty-Server-master\\src\\main\\resources\\email.properties")) {
             properties.load(fis);
             EmailProperties emailProperties = new EmailProperties();
             emailProperties.setHost(properties.getProperty("mail.smtp.host"));

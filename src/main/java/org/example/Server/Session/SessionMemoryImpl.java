@@ -38,7 +38,8 @@ public class SessionMemoryImpl implements Session {
     public void unbind(Channel channel) {
         log.debug("Unbind channel: {}", channel);
         Integer userId = channelUserIdMap.remove(channel);
-        userIdChannelMap.remove(userId);
+        if (userId != null)
+          userIdChannelMap.remove(userId);
     }
 
 

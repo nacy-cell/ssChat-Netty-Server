@@ -5,13 +5,13 @@ import org.example.Server.Model.User;
 import java.util.List;
 
 public interface UserMapper {
-    @Select("SELECT * FROM users")
+    @Select("SELECT * FROM user")
     public List<User> getAllUsers();
 
-    @Select("SELECT * FROM users WHERE username = #{username}")
+    @Select("SELECT * FROM user WHERE UserID = #{username}")
     public User getUserByUsername(Integer username);
 
-    @Insert("INSERT INTO users (username, password) VALUES (#{username}, #{password})")
+    @Insert("INSERT INTO user (UserID, email, password) VALUES (#{userID},#{email}, #{password})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public int insertUser(User user);
 }

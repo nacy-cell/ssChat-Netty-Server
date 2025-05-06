@@ -15,6 +15,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/example/mapper/UserMapper.xml"/>
+        <mapper class="org.example.Server.Dao.UserMapper"/>
+        <mapper class="org.example.Server.Dao.GroupMapper"/>
     </mappers>
 </configuration>
