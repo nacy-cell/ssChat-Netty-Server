@@ -32,6 +32,7 @@ public class LoginServiceImpl implements LoginService {
             UserMapper userMapper = session.getMapper(UserMapper.class);
             User existingUser = userMapper.getUserByUsername(userId);
             if (existingUser != null && existingUser.getPassword().equals(password)) {
+               // userMapper.updateLoginTime(userId);
                 return true;
             }else{
                 return false;
