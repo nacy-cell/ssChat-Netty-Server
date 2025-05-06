@@ -6,6 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.example.Server.Session.GroupSession;
 import org.example.Server.Session.GroupSessionFactory;
+import org.example.Server.Util.Factory.GroupChatServiceFactory;
+import org.example.Server.message.GroupChatMessage;
 import org.example.Server.message.requestMessage.GroupChatTextRequestMessage;
 import org.example.Server.message.responseMessage.GroupChatTextResponseMessage;
 
@@ -17,9 +19,10 @@ public class GroupChatTextRequestMessageHandler extends SimpleChannelInboundHand
     protected void channelRead0(ChannelHandlerContext ctx, GroupChatTextRequestMessage msg) throws Exception {
         final GroupSession groupSession = GroupSessionFactory.getGroupSession();
         final List<Channel> channelList = groupSession.getMembersChannel(msg.getGroupName());
-
+        GroupChatMessage message = new GroupChatMessage(msg.getContent(),msg.getGroupName(),msg.getFrom(),msg.getTime(),null);
+        int insertID = GroupChatServiceFactory.getUserService().addRecode(message);
         for (Channel channel : channelList) {
-            channel.writeAndFlush(new GroupChatTextResponseMessage(msg.getTime(),msg.getFrom(), msg.getContent(),msg.getGroupName()));
+            channel.writeAndFlush(new GroupChatTextResponseMessage(msg.getTime(),msg.getFrom(), msg.getContent(),msg.getGroupName(),insertID));
         }
     }
 }

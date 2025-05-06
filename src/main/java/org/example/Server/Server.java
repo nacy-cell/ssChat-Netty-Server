@@ -42,8 +42,10 @@ public class Server {
                 ch.pipeline().addLast(new GroupCreateRequestMessageHandler());
                 ch.pipeline().addLast(new GroupChatTextRequestMessageHandler());
                 ch.pipeline().addLast(new GroupMembersRequestMessageHandler());
+                ch.pipeline().addLast(new GroupChatImageRequestMessageHandler());
                 ch.pipeline().addLast(new GroupJoinRequestMessageHandler());
                 ch.pipeline().addLast(new GroupQuitRequestMessageHandler());
+                ch.pipeline().addLast(new GroupInitMessageHandler());
                 ch.pipeline().addLast(new GlobalExceptionHandler());
             }
         }).bind(8080).syncUninterruptibly().channel();
