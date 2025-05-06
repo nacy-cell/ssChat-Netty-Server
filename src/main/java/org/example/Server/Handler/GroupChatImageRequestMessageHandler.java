@@ -17,7 +17,6 @@ public class GroupChatImageRequestMessageHandler extends SimpleChannelInboundHan
     protected void channelRead0(ChannelHandlerContext ctx, GroupChatImageRequestMessage msg) throws Exception {
         final GroupSession groupSession = GroupSessionFactory.getGroupSession();
         final List<Channel> channelList = groupSession.getMembersChannel(msg.getGroupName());
-
         for (Channel channel : channelList) {
             channel.writeAndFlush(new GroupChatImageResponseMessage(msg.getTime(),msg.getFrom(),msg.getGroupName(), msg.getContent()));
         }

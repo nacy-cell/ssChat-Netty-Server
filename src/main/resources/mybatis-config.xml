@@ -17,5 +17,6 @@
     <mappers>
         <mapper class="org.example.Server.Dao.UserMapper"/>
         <mapper class="org.example.Server.Dao.GroupMapper"/>
+        <mapper class="org.example.Server.Dao.GroupRecordMapper"/>
     </mappers>
 </configuration>
