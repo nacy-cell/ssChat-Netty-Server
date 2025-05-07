@@ -34,8 +34,9 @@ public class GroupSessionMemoryImpl implements GroupSession {
             int t = groupMapper.createGroup(name,creator);
             if (t != 0){
                 for (Integer i : members){
-                    joinMember(name,i);
+                    groupMapper.joinMember(name,i);
                 }
+                session.commit();
                 return t;
             }else{
                 return 0;
@@ -47,7 +48,9 @@ public class GroupSessionMemoryImpl implements GroupSession {
     public int joinMember(String name, Integer member) {
         try (SqlSession session = sqlSessionFactory.openSession()){
             GroupMapper groupMapper = session.getMapper(GroupMapper.class);
-            return groupMapper.joinMember(name,member);
+            int temp= groupMapper.joinMember(name,member);
+            session.commit();
+            return temp;
         }
     }
 
