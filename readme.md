@@ -23,5 +23,5 @@
   
 ## 项目地址
 
-- 客户端：<https://github.com/869621380/ssChat-Netty-Client.git>
-- 服务端：<https://github.com/869621380/ssChat-Netty-Server.git>
+- 客户端：<https://github.com/nacy-cell/ssChat-Netty-Client.git>
+- 服务端：<https://github.com/nacy-cell/ssChat-Netty-Server.git>
